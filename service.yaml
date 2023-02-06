@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: validate-probes-webhook-service
+  namespace: admission-webhook
+spec:
+  selector:
+    app: validate-probes-webhook
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  type: LoadBalancer

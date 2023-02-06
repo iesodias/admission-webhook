@@ -1,0 +1,25 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validate-probes-webhook
+webhooks:
+  - name: validate-probes-webhook.cluster-service.admission-webhook.svc.cluster.local ###não funcionou
+    rules:
+    - apiGroups:
+      - ""
+      apiVersions:
+      - apps/v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - deployments
+    failurePolicy: Fail
+    clientConfig:
+      service:
+        name: validate-probes-webhook-service
+        namespace: admission-webhook
+        path: /validate
+    sideEffects: None
+    admissionReviewVersions:
+    - v1
