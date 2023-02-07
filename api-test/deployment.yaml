@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-test
+  template:
+    metadata:
+      labels:
+        app: api-test
+        admission-webhook: enabled
+    spec:
+      containers:
+      - name: api-test
+        image: herrmann89/api-test:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: dockerhub

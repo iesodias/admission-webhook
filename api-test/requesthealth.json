@@ -1,0 +1,93 @@
+{
+    "apiVersion": "admission.k8s.io/v1",
+    "kind": "AdmissionReview",
+    "request": {
+      "uid": "2fdd78a3-c3b7-11e9-b656-42010a800184",
+      "kind": {
+        "group": "apps",
+        "version": "v1",
+        "kind": "Deployment"
+      },
+      "resource": {
+        "group": "apps",
+        "version": "v1",
+        "resource": "deployments"
+      },
+      "requestKind": {
+        "group": "apps",
+        "version": "v1",
+        "kind": "Deployment"
+      },
+      "requestResource": {
+        "group": "apps",
+        "version": "v1",
+        "resource": "deployments"
+      },
+      "name": "nginx-deployment",
+      "namespace": "default",
+      "operation": "CREATE",
+      "userInfo": {
+        "username": "admin",
+        "uid": "2fdd5b1a-c3b7-11e9-b656-42010a800184",
+        "groups": [
+          "system:masters"
+        ]
+      },
+      "object": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "metadata": {
+          "name": "nginx-deployment",
+          "namespace": "default",
+          "creationTimestamp": null
+        },
+        "spec": {
+          "replicas": 1,
+          "selector": {
+            "matchLabels": {
+              "app": "nginx"
+            }
+          },
+          "template": {
+            "metadata": {
+              "labels": {
+                "app": "nginx"
+              }
+            },
+            "spec": {
+              "containers": [
+                {
+                  "name": "nginx",
+                  "image": "nginx:latest",
+                  "ports": [
+                    {
+                      "containerPort": 80
+                    }
+                  ]
+                }
+              ],
+              "livenessProbe": {
+                "httpGet": {
+                  "path": "/health",
+                  "port": 80
+                },
+                "initialDelaySeconds": 10,
+                "timeoutSeconds": 5
+              },
+              "readinessProbe": {
+                "httpGet": {
+                  "path": "/ready",
+                  "port": 80
+                },
+                "initialDelaySeconds": 5,
+                "timeoutSeconds": 5
+                  }
+            }
+          }
+        },
+        "status": {}
+      },
+      "oldObject": null,
+      "dryRun": false
+    }
+  }
