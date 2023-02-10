@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admission-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: validate-probes-webhook
+  template:
+    metadata:
+      labels:
+        app: validate-probes-webhook
+    spec:
+      containers:
+      - name: admission-webhook
+        image: herrmann89/admission-webhook:latest
+        ports:
+        - containerPort: 8443
+        volumeMounts:
+          - name: webhook-certs
+            mountPath: /certs
+            readOnly: true
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: webhook-certs
+      imagePullSecrets:
+      - name: dockerhub
+

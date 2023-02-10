@@ -8,6 +8,6 @@ spec:
     app: validate-probes-webhook
   ports:
   - name: http
-    port: 8080
-    targetPort: 8080
-  type: NodePort
+    port: 443
+    targetPort: 8443
+  type: ClusterIP

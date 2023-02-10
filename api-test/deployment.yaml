@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-test-deployment
+  name: api
 spec:
   replicas: 1
   selector:
@@ -18,5 +18,17 @@ spec:
         image: herrmann89/api-test:latest
         ports:
         - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health-check
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /health-check
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
       imagePullSecrets:
       - name: dockerhub

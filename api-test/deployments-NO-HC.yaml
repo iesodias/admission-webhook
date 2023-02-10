@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: validate-probes-webhook-deployment
+  name: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: validate-probes-webhook
+      app: api-test
   template:
     metadata:
       labels:
-        app: validate-probes-webhook
+        app: api-test
+        admission-webhook: enabled
     spec:
       containers:
-      - name: validate-probes-webhook
-        image: herrmann89/admission-webhook:latest
+      - name: api-test
+        image: herrmann89/api-test:latest
         ports:
         - containerPort: 8080
       imagePullSecrets:
